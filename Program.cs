@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Debugging;
+using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 
 namespace elastic_logger_web_api
@@ -25,6 +26,7 @@ namespace elastic_logger_web_api
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
                 .WriteTo.Console()
                 .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
                 {
